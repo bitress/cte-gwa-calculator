@@ -123,7 +123,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" id="add_data"  class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -135,30 +135,62 @@
 <script>
     const dataTable = new simpleDatatables.DataTable("#rank");
 
-
         $(document).ready(function () {
-        // Counter to keep track of the number of subjects
-        let subjectCount = 1;
+            // Counter to keep track of the number of subjects
+            let subjectCount = 1;
 
-        // Event listener for the "Add Subject" button
-        $('#add_subject').on('click',function () {
-        // Clone the existing subject form
-        let newSubjectForm = $('.subject-form').first().clone();
+            // Event listener for the "Add Subject" button
+            $('#add_subject').on('click',function () {
+            // Clone the existing subject form
+            let newSubjectForm = $('.subject-form').first().clone();
 
-        // Clear the input values in the cloned form
-        newSubjectForm.find('input').val('');
+            // Clear the input values in the cloned form
+            newSubjectForm.find('input').val('');
 
-        // Increment the name attributes with the subjectCount
-        newSubjectForm.find('select').attr('name', `subject[]`);
-        newSubjectForm.find('input[name="units[]"]').attr('name', `units[]`);
-        newSubjectForm.find('input[name="grade[]"]').attr('name', `grade[]`);
+            // Increment the name attributes with the subjectCount
+            newSubjectForm.find('select').attr('name', `subject[]`);
+            newSubjectForm.find('input[name="units[]"]').attr('name', `units[]`);
+            newSubjectForm.find('input[name="grade[]"]').attr('name', `grade[]`);
 
-        // Append the new subject form to the container
-        $('#subjectFormContainer').append(newSubjectForm);
+            // Append the new subject form to the container
+            $('#subjectFormContainer').append(newSubjectForm);
 
-        // Increment the subject count for the next form
-        subjectCount++;
-    });
+            // Increment the subject count for the next form
+            subjectCount++;
+        });
+
+
+
+            $("#add_data").on('click', function (e){
+                e.preventDefault();
+
+                let unitsArray = [], subjectArray = [], gradeArray = [];
+
+
+                $('input[name="subject[]"]').each(function() {
+                    subjectArray.push($(this).val());
+                });
+
+
+                $('input[name="units[]"]').each(function() {
+                    unitsArray.push($(this).val());
+                });
+
+
+                $('input[name="grade[]"]').each(function() {
+                    gradeArray.push($(this).val());
+                });
+
+
+                $.ajax({
+                    type: "POST",
+                    url: ''
+                })
+
+
+
+
+            });
     });
 </script>
 </body>
